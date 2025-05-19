@@ -5,28 +5,38 @@ import { MdDeleteOutline } from "react-icons/md";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee ,coffees ,setCoffees }) => {
   const { _id, photo, name, price, supplier } = coffee;
 
-  const handlerCoffeeDelate =(id)=>{
+  const handlerCoffeeDelate = (id) => {
     Swal.fire({
-  title: "Are you sure?",
-  text: "Delete this Coffee!!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, delete it!"
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire({
-      title: "Deleted!",
-      text: "Your Coffee has been deleted.",
-      icon: "success"
+      title: "Are you sure?",
+      text: "Delete this Coffee!!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/coffees/${id}`,{
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Coffee has been deleted.",
+                icon: "success",
+              });
+              const remainingCoffees = coffees.filter(coffee => coffee._id !== id);
+              setCoffees(remainingCoffees); 
+            }
+          });
+      }
     });
-  }
-});
-  }
+  };
   return (
     // flex flex-col md:flex-row justify-center items-center p-9
     <div className="grid md:grid-cols-6 place-items-center bg-[#F5F4F1] rounded-xl space-x-5 space-y-5 p-9">
@@ -56,7 +66,10 @@ const CoffeeCard = ({ coffee }) => {
             <GoPencil />
           </button>
         </Link>
-        <button onClick={()=>handlerCoffeeDelate(_id)} className="btn w-fit join-item rounded-lg text-xl md:text-2xl text-white bg-[#EA4744]">
+        <button
+          onClick={() => handlerCoffeeDelate(_id)}
+          className="btn w-fit join-item rounded-lg text-xl md:text-2xl text-white bg-[#EA4744]"
+        >
           <MdDeleteOutline />
         </button>
       </div>

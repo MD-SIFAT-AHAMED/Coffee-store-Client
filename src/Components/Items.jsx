@@ -33,7 +33,7 @@ const Items = () => {
           {items.map((item,index) => (
             <div key={index} className="place-items-start space-y-2">
               <img src={item.logo} alt="item.name" />
-              <h3 className="text-4xl rancho-regular text-[#331A15]">{item.name}</h3>
+              <h3 className=" text-2xl md:text-4xl rancho-regular text-[#331A15]">{item.name}</h3>
               <p className="text-[#1B1A1A] raleway-ragular">{item.des}</p>
             </div>
           ))}

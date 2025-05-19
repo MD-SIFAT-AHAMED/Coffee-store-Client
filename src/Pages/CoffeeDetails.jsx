@@ -43,7 +43,7 @@ const CoffeeDetails = () => {
               {price}
             </p>
             <p>
-              <span className="font-semibold">details: </span>
+              <span className="font-semibold">Details: </span>
               {details}
             </p>
             </div>

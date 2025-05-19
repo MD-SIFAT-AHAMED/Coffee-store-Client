@@ -24,8 +24,8 @@ const FollowOn = () => {
         Follow on Instagram
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-5 place-items-center">
-        {cups.map((cup) => (
-          <figure>
+        {cups.map((cup,index) => (
+          <figure key={index}>
             <img src={cup.img} alt="" />
           </figure>
         ))}
